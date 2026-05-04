@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nodus — BIM Solutions | Consultoria, Implementação e Treinamentos BIM</title>
+<meta name="description" content="Nodus BIM Solutions. Conectando tecnologia, dados e engenharia para transformar projetos em resultados. Consultoria, implementação e treinamentos em BIM.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#203C7F;
+    --navy-deep:#152855;
+    --navy-soft:#2c4a96;
+    --ink:#0d1a3a;
+    --bone:#EDF1FF;
+    --bone-soft:#f5f7ff;
+    --white:#ffffff;
+    --muted:#6b7aa8;
+    --line:rgba(32,60,127,.12);
+    --line-on-navy:rgba(237,241,255,.18);
+    --max:1280px;
+    --gutter:clamp(20px, 4vw, 64px);
+    --font:'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bone);
+    color:var(--ink);
+    font-family:var(--font);
+    font-weight:300;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img,svg{max-width:100%;display:block}
+  button{font-family:inherit;cursor:pointer;border:0;background:none}
+  /* ========== LOGO COMPONENT ========== */
+  .logo{display:inline-flex;align-items:center;gap:14px;color:currentColor}
+  .logo-mark{width:42px;height:42px;flex:none;display:block}
+  .logo-text{display:flex;flex-direction:column;line-height:.95}
+  .logo-word{font-weight:300;font-size:26px;letter-spacing:-.02em}
+  .logo-tag{font-size:8.5px;letter-spacing:.32em;font-weight:500;margin-top:4px;opacity:.85}
+  /* ========== NAV ========== */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    padding:18px var(--gutter);
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+    background:rgba(237,241,255,0.85);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;
+    transition:all .35s ease;
+  }
+  .nav.scrolled{border-bottom-color:var(--line);padding:14px var(--gutter);background:rgba(237,241,255,0.95)}
+  .nav-links{display:flex;gap:36px;font-size:14px;font-weight:400}
+  .nav-links a{position:relative;padding:6px 0;color:var(--ink);transition:color .2s;opacity:.7}
+  .nav-links a:hover{opacity:1}
+  .nav-links a::after{
+    content:'';position:absolute;left:50%;bottom:0;width:0;height:1.5px;background:var(--navy);
+    transition:all .3s ease;transform:translateX(-50%);
+  }
+  .nav-links a:hover::after{width:100%}
+  .nav-cta{
+    font-size:13px;letter-spacing:.04em;font-weight:500;
+    padding:12px 22px;background:var(--navy);color:var(--bone);border-radius:999px;
+    transition:all .25s;display:inline-flex;align-items:center;gap:8px;
+  }
+  .nav-cta:hover{background:var(--navy-deep);transform:translateY(-1px)}
+  .nav-cta .arr{transition:transform .25s}
+  .nav-cta:hover .arr{transform:translateX(3px)}
+  .menu-toggle{display:none;width:32px;height:24px;position:relative;cursor:pointer}
+  .menu-toggle span{position:absolute;left:0;right:0;height:2px;background:var(--navy);transition:.3s;border-radius:2px}
+  .menu-toggle span:nth-child(1){top:4px}
+  .menu-toggle span:nth-child(2){top:50%;margin-top:-1px}
+  .menu-toggle span:nth-child(3){bottom:4px}
+  /* ========== HERO ========== */
+  .hero{
+    background:var(--navy);
+    color:var(--bone);
+    position:relative;
+    overflow:hidden;
+    padding:160px var(--gutter) 100px;
+    min-height:100vh;
+    display:flex;align-items:center;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(237,241,255,.08), transparent 50%),
+      radial-gradient(ellipse at 10% 90%, rgba(44,74,150,.4), transparent 60%),
+      var(--navy);
+    z-index:0;
+  }
+  .hero-grid-bg{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(237,241,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(237,241,255,.04) 1px, transparent 1px);
+    background-size:80px 80px;
+    z-index:0;
+    mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+  }
+  .hero-symbol{
+    position:absolute;top:50%;right:60px;transform:translateY(-50%);
+    width:min(520px,40vw);opacity:.55;z-index:1;
+    animation:float 12s ease-in-out infinite;
+    filter:drop-shadow(0 12px 40px rgba(0,0,0,.25));
+    pointer-events:none;
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(-50%) rotate(0)}
+    50%{transform:translateY(-52%) rotate(2deg)}
+  }
+  .hero-inner{
+    position:relative;z-index:2;max-width:var(--max);margin:0 auto;width:100%;
+  }
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:14px;
+    font-size:12px;letter-spacing:.32em;font-weight:500;text-transform:uppercase;
+    color:var(--bone);opacity:.75;margin-bottom:36px;
+    padding:8px 18px;border:1px solid var(--line-on-navy);border-radius:999px;
+    background:rgba(237,241,255,.04);
+    opacity:0;transform:translateY(20px);
+    animation:rise 1s .1s ease forwards;
+  }
+  .hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--bone);box-shadow:0 0 14px var(--bone)}
+  .hero h1{
+    font-weight:200;
+    font-size:clamp(42px, 7.5vw, 104px);
+    line-height:1.0;
+    letter-spacing:-.025em;
+    margin-bottom:36px;
+    max-width:18ch;
+  }
+  .hero h1 strong{font-weight:500;color:var(--bone)}
+  .hero h1 em{font-style:normal;font-weight:300;background:linear-gradient(120deg, var(--bone) 0%, #b8c5ee 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero h1 .word{display:inline-block;opacity:0;transform:translateY(40px);animation:rise 1s ease forwards}
+  .hero h1 .word:nth-child(1){animation-delay:.2s}
+  .hero h1 .word:nth-child(2){animation-delay:.32s}
+  .hero h1 .word:nth-child(3){animation-delay:.44s}
+  .hero h1 .word:nth-child(4){animation-delay:.56s}
+  .hero h1 .word:nth-child(5){animation-delay:.68s}
+  .hero h1 .word:nth-child(6){animation-delay:.8s}
+  .hero-lead{
+    max-width:560px;font-size:clamp(16px,1.35vw,19px);
+    color:var(--bone);opacity:.78;line-height:1.7;font-weight:300;
+    opacity:0;transform:translateY(20px);
+    animation:rise 1s 1s ease forwards;
+  }
+  .hero-actions{
+    display:flex;gap:16px;margin-top:48px;flex-wrap:wrap;align-items:center;
+    opacity:0;transform:translateY(20px);
+    animation:rise 1s 1.15s ease forwards;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:12px;
+    padding:16px 30px;font-size:14px;letter-spacing:.02em;font-weight:500;
+    transition:all .25s ease;cursor:pointer;border-radius:999px;
+  }
+  .btn-primary{background:var(--bone);color:var(--navy)}
+  .btn-primary:hover{background:var(--white);transform:translateY(-2px);box-shadow:0 12px 30px rgba(237,241,255,.18)}
+  .btn-ghost-light{background:transparent;color:var(--bone);border:1px solid var(--line-on-navy)}
+  .btn-ghost-light:hover{background:rgba(237,241,255,.08);border-color:var(--bone)}
+  .btn-primary-dark{background:var(--navy);color:var(--bone)}
+  .btn-primary-dark:hover{background:var(--navy-deep);transform:translateY(-2px);box-shadow:0 12px 30px rgba(32,60,127,.25)}
+  .btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+  .btn-ghost:hover{background:var(--navy);color:var(--bone)}
+  .btn .arr{transition:transform .25s}
+  .btn:hover .arr{transform:translateX(4px)}
+  .hero-services{
+    display:flex;gap:48px;margin-top:80px;flex-wrap:wrap;
+    padding-top:32px;border-top:1px solid var(--line-on-navy);
+    opacity:0;transform:translateY(20px);
+    animation:rise 1s 1.4s ease forwards;
+  }
+  .hero-service{display:flex;align-items:center;gap:14px;font-size:13px;letter-spacing:.16em;font-weight:400;text-transform:uppercase;opacity:.85}
+  .hero-service .num{font-size:11px;opacity:.5;font-weight:500}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  /* ========== SECTION BASE ========== */
+  section{padding:140px var(--gutter);max-width:var(--max);margin:0 auto;position:relative}
+  .section-full{max-width:none;margin:0;padding:140px var(--gutter)}
+  .section-full > .inner{max-width:var(--max);margin:0 auto}
+  .label{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;font-weight:500;
+    color:var(--navy);margin-bottom:36px;
+  }
+  .label .num{
+    width:34px;height:34px;border:1px solid var(--navy);border-radius:50%;
+    display:grid;place-items:center;font-size:12px;font-weight:500;
+  }
+  .label-light{color:var(--bone)}
+  .label-light .num{border-color:var(--bone)}
+  .h2{
+    font-weight:300;
+    font-size:clamp(36px,5.5vw,68px);line-height:1.05;letter-spacing:-.02em;
+    margin-bottom:32px;max-width:22ch;
+  }
+  .h2 strong{font-weight:600}
+  .h2 em{font-style:normal;font-weight:400;color:var(--navy)}
+  .h2-light em{color:var(--bone)}
+  .lead{font-size:clamp(16px,1.3vw,19px);color:var(--ink);opacity:.75;line-height:1.7;max-width:60ch;font-weight:300}
+  .lead-light{color:var(--bone);opacity:.78}
+  /* ========== STATS / NUMBERS BAR ========== */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    margin:0 auto;max-width:var(--max);
+  }
+  .stat{
+    padding:48px 32px;border-right:1px solid var(--line);
+    transition:background .3s;
+  }
+  .stat:last-child{border-right:0}
+  .stat:hover{background:var(--bone-soft)}
+  .stat-num{font-weight:400;font-size:clamp(40px,4.5vw,64px);color:var(--navy);line-height:1;letter-spacing:-.02em}
+  .stat-lbl{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--ink);opacity:.7;margin-top:14px}
+  /* ========== SOBRE ========== */
+  .about{display:grid;grid-template-columns:0.85fr 1.15fr;gap:96px;align-items:start}
+  .about-visual{
+    position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;
+    background:linear-gradient(140deg, var(--navy-deep) 0%, var(--navy) 50%, #2c4a96 100%);
+    box-shadow:0 30px 80px rgba(32,60,127,.22);
+    isolation:isolate;
+  }
+  .about-visual::before{
+    content:'';position:absolute;inset:0;z-index:1;
+    background-image:
+      linear-gradient(rgba(237,241,255,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(237,241,255,.06) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse 80% 80% at 50% 60%, black 30%, transparent 100%);
+    -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 60%, black 30%, transparent 100%);
+  }
+  .about-visual::after{
+    content:'';position:absolute;inset:-50%;z-index:1;
+    background:radial-gradient(circle at center, rgba(237,241,255,.18) 0%, transparent 50%);
+    animation:pulse 7s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(.9);opacity:.5}50%{transform:scale(1.05);opacity:.9}}
+  .about-symbol-ghost{
+    position:absolute;z-index:2;
+    width:140%;top:-30%;right:-50%;
+    opacity:.06;
+    animation:float-slow 14s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes float-slow{
+    0%,100%{transform:translateY(0) rotate(0deg)}
+    50%{transform:translateY(-20px) rotate(4deg)}
+  }
+  .about-wordmark{
+    position:absolute;z-index:5;
+    top:50%;left:50%;transform:translate(-50%, -55%);
+    width:78%;
+    filter:drop-shadow(0 8px 30px rgba(0,0,0,.25));
+    animation:fadeIn 1.2s .3s ease both;
+  }
+  @keyframes fadeIn{from{opacity:0;transform:translate(-50%,-50%)}to{opacity:1;transform:translate(-50%,-55%)}}
+  .about-mark{
+    position:absolute;z-index:6;
+    bottom:32px;right:32px;
+    width:88px;height:88px;
+    border-radius:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+    transition:transform .4s ease;
+  }
+  .about-visual:hover .about-mark{transform:scale(1.08) rotate(-4deg)}
+  .about-nodes{position:absolute;inset:0;z-index:3;pointer-events:none}
+  .about-nodes .node{
+    position:absolute;width:8px;height:8px;border-radius:50%;
+    background:var(--bone);
+    box-shadow:0 0 16px rgba(237,241,255,.6);
+    animation:blink-soft 3s ease-in-out infinite;
+  }
+  .about-nodes .node:nth-child(1){top:18%;left:14%;animation-delay:0s}
+  .about-nodes .node:nth-child(2){top:24%;right:16%;animation-delay:.6s;width:6px;height:6px}
+  .about-nodes .node:nth-child(3){bottom:32%;left:20%;animation-delay:1.2s;width:5px;height:5px}
+  .about-nodes .node:nth-child(4){top:65%;right:22%;animation-delay:1.8s}
+  .about-nodes .line{
+    position:absolute;height:1px;
+    background:linear-gradient(90deg, transparent, rgba(237,241,255,.35), transparent);
+    transform-origin:left center;
+  }
+  .about-nodes .line:nth-child(5){top:22%;left:14%;width:60%;transform:rotate(8deg);opacity:.4}
+  .about-nodes .line:nth-child(6){top:67%;left:20%;width:55%;transform:rotate(-6deg);opacity:.3}
+  @keyframes blink-soft{
+    0%,100%{opacity:.4;transform:scale(.8)}
+    50%{opacity:1;transform:scale(1)}
+  }
+  .about-visual .badge{
+    position:absolute;bottom:32px;left:32px;z-index:6;
+    color:var(--bone);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;
+    display:flex;align-items:center;gap:10px;
+    padding:10px 14px;background:rgba(237,241,255,.08);
+    border:1px solid rgba(237,241,255,.18);border-radius:999px;
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  }
+  .about-visual .badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--bone);box-shadow:0 0 12px var(--bone);animation:blink 1.6s ease infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+  .about-meta{
+    position:absolute;top:32px;right:32px;z-index:6;
+    color:var(--bone);font-size:10px;letter-spacing:.32em;text-transform:uppercase;font-weight:600;opacity:.65;
+  }
+  .about-meta::after{content:'';display:inline-block;width:24px;height:1px;background:var(--bone);margin-left:10px;vertical-align:middle;opacity:.6}
+  .about-text > p{margin-bottom:24px}
+  .about-pillars{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;
+  }
+  .pillar{
+    padding:28px 24px;background:var(--white);border-radius:12px;border:1px solid var(--line);
+    transition:transform .3s, box-shadow .3s;
+  }
+  .pillar:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(32,60,127,.08)}
+  .pillar-icon{width:36px;height:36px;display:grid;place-items:center;border:1.5px solid var(--navy);border-radius:50%;color:var(--navy);margin-bottom:16px}
+  .pillar h4{font-weight:500;font-size:17px;margin-bottom:6px;color:var(--navy)}
+  .pillar p{font-size:14px;line-height:1.55;color:var(--ink);opacity:.7}
+  /* ========== SERVIÇOS ========== */
+  .services{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .services-head{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:80px}
+  .services-head > p.lead{padding-top:96px}
+  .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+  .service-card{
+    background:var(--bone);border-radius:16px;padding:48px 40px;
+    position:relative;overflow:hidden;cursor:default;
+    transition:all .4s ease;
+    min-height:340px;display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .service-card:hover{background:var(--navy);color:var(--bone);transform:translateY(-4px)}
+  .service-card:hover .svc-num,
+  .service-card:hover h3,
+  .service-card:hover p{color:var(--bone)}
+  .service-card:hover .svc-arrow{background:var(--bone);color:var(--navy);transform:rotate(-45deg)}
+  .service-card::after{
+    content:'';position:absolute;bottom:0;right:0;width:200px;height:200px;
+    background:radial-gradient(circle at bottom right, rgba(32,60,127,.08), transparent 70%);
+    transition:background .4s;
+  }
+  .service-card:hover::after{background:radial-gradient(circle at bottom right, rgba(237,241,255,.08), transparent 70%)}
+  .svc-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .svc-num{font-size:13px;letter-spacing:.2em;font-weight:500;color:var(--navy);transition:color .3s}
+  .svc-arrow{
+    width:44px;height:44px;border-radius:50%;background:var(--white);
+    display:grid;place-items:center;color:var(--navy);font-size:18px;
+    transition:all .4s ease;
+  }
+  .service-card h3{font-weight:400;font-size:clamp(22px,2.2vw,30px);line-height:1.15;letter-spacing:-.01em;margin-top:80px;margin-bottom:14px;transition:color .3s}
+  .service-card p{font-size:15px;line-height:1.6;opacity:.78;transition:color .3s}
+  /* ========== PROCESSO (DARK) ========== */
+  .process{background:var(--navy);color:var(--bone)}
+  .process-grid{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start}
+  .process-steps{display:flex;flex-direction:column}
+  .process-step{
+    display:grid;grid-template-columns:80px 1fr;gap:32px;
+    padding:32px 0;border-bottom:1px solid var(--line-on-navy);
+    transition:padding-left .3s;
+  }
+  .process-step:hover{padding-left:16px}
+  .process-step:last-child{border-bottom:0}
+  .ps-num{font-size:14px;letter-spacing:.2em;font-weight:500;opacity:.6;padding-top:8px}
+  .ps-content h4{font-weight:400;font-size:24px;margin-bottom:10px;line-height:1.2}
+  .ps-content p{font-size:15px;line-height:1.65;opacity:.7;font-weight:300}
+  /* ========== INFOPRODUTOS ========== */
+  .infoprods{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .info-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:64px}
+  .info-card{
+    background:var(--bone);border-radius:14px;padding:32px 24px;
+    transition:all .35s ease;cursor:default;
+    display:flex;flex-direction:column;gap:18px;min-height:220px;
+    border:1px solid transparent;
+  }
+  .info-card:hover{background:var(--white);border-color:var(--navy);transform:translateY(-4px);box-shadow:0 18px 40px rgba(32,60,127,.10)}
+  .info-icon{
+    width:44px;height:44px;border-radius:12px;background:var(--navy);color:var(--bone);
+    display:grid;place-items:center;
+  }
+  .info-num{font-size:11px;letter-spacing:.18em;font-weight:500;color:var(--navy);opacity:.5}
+  .info-card h4{font-weight:500;font-size:18px;line-height:1.25;color:var(--ink);letter-spacing:-.005em}
+  .info-card p{font-size:13px;line-height:1.5;color:var(--ink);opacity:.65;margin-top:auto}
+  /* ========== TRILHAS DE SERVIÇO ========== */
+  .tracks{background:var(--navy);color:var(--bone)}
+  .tracks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px}
+  .track{
+    background:rgba(237,241,255,.04);border:1px solid var(--line-on-navy);
+    border-radius:18px;padding:40px 36px;
+    transition:all .35s ease;
+    display:flex;flex-direction:column;gap:20px;
+  }
+  .track:hover{background:rgba(237,241,255,.07);border-color:rgba(237,241,255,.32);transform:translateY(-4px)}
+  .track-tag{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;opacity:.65}
+  .track-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--bone)}
+  .track h3{font-weight:400;font-size:clamp(22px,2.2vw,28px);line-height:1.15;letter-spacing:-.01em}
+  .track h3 strong{font-weight:600}
+  .track p.track-lead{font-size:14px;line-height:1.55;opacity:.7;font-weight:300}
+  .track ul{list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:8px}
+  .track li{
+    font-size:15px;line-height:1.45;font-weight:300;
+    padding-left:24px;position:relative;
+  }
+  .track li::before{
+    content:'';position:absolute;left:0;top:9px;
+    width:12px;height:1.5px;background:var(--bone);opacity:.7;
+  }
+  .track li strong{font-weight:500;display:block;margin-bottom:4px}
+  .track li small{display:block;font-size:13px;opacity:.6;margin-top:6px;line-height:1.5;font-weight:300}
+  .track-foot{margin-top:auto;padding-top:24px;border-top:1px solid var(--line-on-navy);font-size:13px;letter-spacing:.04em;opacity:.7}
+  /* ========== PORTFÓLIO (CARROSSEL HORIZONTAL) ========== */
+  .portfolio-section{max-width:none;padding-right:0;overflow:hidden;position:relative}
+  .portfolio-section > .services-head{padding-right:var(--gutter)}
+  .portfolio-controls{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    padding-right:var(--gutter);margin-bottom:48px;flex-wrap:wrap;
+  }
+  .portfolio-counter{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);opacity:.7;font-weight:500}
+  .portfolio-counter .current{color:var(--navy);opacity:1;font-weight:600}
+  .portfolio-counter .total{opacity:.45}
+  .portfolio-arrows{display:flex;gap:12px}
+  .portfolio-arrow{
+    width:52px;height:52px;border-radius:50%;border:1px solid var(--navy);
+    background:transparent;color:var(--navy);cursor:pointer;
+    display:grid;place-items:center;transition:all .25s ease;
+  }
+  .portfolio-arrow:hover{background:var(--navy);color:var(--bone);transform:translateY(-2px)}
+  .portfolio-arrow:disabled{opacity:.3;cursor:not-allowed;transform:none;background:transparent;color:var(--navy)}
+  .portfolio-arrow svg{transition:transform .25s}
+  .portfolio-arrow.prev svg{transform:rotate(180deg)}
+  .portfolio-track{
+    display:flex;gap:24px;
+    overflow-x:auto;overflow-y:visible;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+    padding:50px 0 60px var(--gutter);
+    margin:-30px 0 -30px 0;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .portfolio-track::-webkit-scrollbar{display:none}
+  .project{
+    flex:0 0 min(504px, 63vw);
+    scroll-snap-align:start;
+    border-radius:18px;overflow:hidden;background:var(--white);border:1px solid var(--line);
+    transition:transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease, border-color .3s, opacity .35s ease;
+    cursor:pointer;
+    display:flex;flex-direction:column;
+    will-change:transform;
+  }
+  /* When the mouse is over the track, non-hovered cards shrink and dim */
+  .portfolio-track:hover .project{
+    transform:scale(.92);
+    opacity:.6;
+  }
+  .portfolio-track:hover .project:hover,
+  .project:hover{
+    transform:translateY(-8px) scale(1.10);
+    opacity:1;
+    box-shadow:0 40px 80px rgba(32,60,127,.22);
+    border-color:rgba(32,60,127,.28);
+    z-index:5;
+  }
+  .project:last-child{margin-right:var(--gutter)}
+  .project-thumb{
+    aspect-ratio:4/3;background:var(--navy);position:relative;overflow:hidden;
+    display:grid;place-items:center;
+  }
+  .project-expand{
+    position:absolute;top:18px;right:18px;z-index:4;
+    width:44px;height:44px;border-radius:50%;
+    background:var(--navy);color:var(--bone);
+    display:grid;place-items:center;
+    border:2px solid var(--bone);
+    cursor:pointer;
+    font-size:22px;line-height:1;font-weight:300;
+    transition:all .25s ease;
+    box-shadow:0 6px 18px rgba(13,26,58,.35), 0 0 0 1px rgba(13,26,58,.15);
+  }
+  .project-expand:hover{
+    background:var(--bone);color:var(--navy);
+    border-color:var(--navy);
+    transform:scale(1.14) rotate(90deg);
+    box-shadow:0 10px 26px rgba(13,26,58,.45);
+  }
+  .project-expand svg{width:18px;height:18px;stroke-width:2.6}
+  .project-thumb::before{
+    content:'';position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(237,241,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(237,241,255,.05) 1px, transparent 1px);
+    background-size:36px 36px;
+    z-index:1;
+  }
+  .project-thumb::after{
+    content:'';position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg, transparent 0%, transparent 50%, rgba(21,40,85,.55) 100%);
+  }
+  .project-thumb svg, .project-thumb img.placeholder{position:relative;z-index:2;width:42%;height:auto;color:var(--bone);opacity:.55;transition:transform .6s ease, opacity .3s;filter:brightness(0) invert(1)}
+  .project-thumb img.placeholder{filter:none;opacity:.9}
+  .project-thumb img.real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;transition:transform .6s ease}
+  .project-thumb.has-image::before{opacity:.35}
+  .project-thumb.has-image img.placeholder{display:none}
+  .project-thumb.has-image .project-thumb-tag{box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  .project:hover .project-thumb svg, .project:hover .project-thumb img.placeholder{transform:scale(1.06);opacity:.85}
+  .project:hover .project-thumb img.real{transform:scale(1.05)}
+  .project:nth-child(2) .project-thumb{background:linear-gradient(135deg, var(--navy) 0%, #1a3470 100%)}
+  .project:nth-child(3) .project-thumb{background:linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%)}
+  .project:nth-child(4) .project-thumb{background:linear-gradient(165deg, #2c4a96 0%, var(--navy) 100%)}
+  .project:nth-child(5) .project-thumb{background:linear-gradient(195deg, var(--navy) 0%, var(--navy-deep) 100%)}
+  .project:nth-child(6) .project-thumb{background:linear-gradient(225deg, var(--navy-soft) 0%, var(--navy) 100%)}
+  .project-thumb-tag{
+    position:absolute;top:20px;left:20px;z-index:3;
+    padding:8px 14px;background:rgba(237,241,255,.95);color:var(--navy);
+    font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;
+    border-radius:999px;
+  }
+  .project-thumb-num{
+    position:absolute;bottom:20px;right:24px;z-index:3;
+    color:var(--bone);font-size:13px;letter-spacing:.22em;font-weight:500;opacity:.85;
+  }
+  .project-info{padding:32px 32px 36px;display:flex;flex-direction:column;gap:18px;flex:1}
+  .project-cat{font-size:11px;letter-spacing:.22em;font-weight:600;text-transform:uppercase;color:var(--navy);opacity:.75}
+  .project-info h4{font-weight:400;font-size:clamp(22px,2vw,28px);line-height:1.2;color:var(--ink);letter-spacing:-.015em}
+  .project-info p{font-size:14px;color:var(--ink);opacity:.65;line-height:1.55}
+  .project-meta{display:flex;gap:24px;margin-top:auto;padding-top:20px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .project-meta div{display:flex;flex-direction:column;gap:2px}
+  .project-meta .lbl{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);opacity:.6;font-weight:600}
+  .project-meta .val{font-size:14px;color:var(--ink);font-weight:500}
+  /* ========== LIGHTBOX (PORTFOLIO MODAL) ========== */
+  .lightbox{
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(13,26,58,.92);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    display:none;align-items:center;justify-content:center;
+    padding:clamp(20px,4vw,60px);
+    opacity:0;transition:opacity .35s ease;
+  }
+  .lightbox.open{display:flex;opacity:1}
+  .lightbox-content{
+    position:relative;
+    max-width:min(1400px,94vw);max-height:90vh;
+    background:var(--white);border-radius:20px;overflow:hidden;
+    box-shadow:0 40px 100px rgba(0,0,0,.5);
+    transform:scale(.94);transition:transform .4s cubic-bezier(.2,.8,.2,1);
+    display:flex;flex-direction:column;
+  }
+  .lightbox.open .lightbox-content{transform:scale(1)}
+  .lightbox-img-wrap{
+    position:relative;flex:1;min-height:0;
+    background:var(--bone-soft);
+    display:grid;place-items:center;
+    overflow:hidden;
+  }
+  .lightbox-img{
+    max-width:100%;max-height:78vh;width:auto;height:auto;
+    display:block;
+    object-fit:contain;
+  }
+  .lightbox-caption{
+    padding:22px 32px;border-top:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    background:var(--white);
+  }
+  .lightbox-caption .lc-title{font-weight:500;font-size:18px;color:var(--ink);letter-spacing:-.01em}
+  .lightbox-caption .lc-cat{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);opacity:.75;font-weight:600;margin-top:4px}
+  .lightbox-close{
+    position:absolute;top:18px;right:18px;z-index:2;
+    width:46px;height:46px;border-radius:50%;
+    background:rgba(237,241,255,.95);color:var(--navy);
+    border:0;cursor:pointer;
+    display:grid;place-items:center;
+    font-size:24px;line-height:1;font-weight:300;
+    transition:all .25s;
+    box-shadow:0 6px 18px rgba(21,40,85,.2);
+  }
+  .lightbox-close:hover{background:var(--white);transform:rotate(90deg) scale(1.06)}
+  .lightbox-close svg{width:20px;height:20px}
+  body.lb-open{overflow:hidden}
+  /* ========== DEPOIMENTO / CTA STRIP ========== */
+  .quote-strip{background:var(--bone-soft);text-align:center;padding:140px var(--gutter)}
+  .quote-strip .inner{max-width:880px;margin:0 auto}
+  .quote-mark{font-size:72px;color:var(--navy);line-height:0;margin-bottom:24px;font-family:Georgia,serif}
+  .quote-text{font-weight:300;font-size:clamp(22px,2.5vw,34px);line-height:1.4;color:var(--ink);letter-spacing:-.01em;margin-bottom:32px}
+  .quote-attr{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);font-weight:500}
+  /* ========== CTA ========== */
+  .cta-banner{
+    background:var(--navy);color:var(--bone);text-align:center;
+    padding:160px var(--gutter);position:relative;overflow:hidden;
+  }
+  .cta-banner::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at 80% 0%, rgba(237,241,255,.08), transparent 50%),
+      radial-gradient(ellipse at 20% 100%, rgba(44,74,150,.5), transparent 60%);
+  }
+  .cta-banner-inner{max-width:900px;margin:0 auto;position:relative;z-index:2}
+  .cta-banner h2{
+    font-weight:300;font-size:clamp(36px,5.5vw,72px);line-height:1.05;letter-spacing:-.02em;
+    margin-bottom:32px;
+  }
+  .cta-banner h2 em{font-style:normal;font-weight:500}
+  .cta-banner p{font-size:18px;opacity:.78;max-width:54ch;margin:0 auto 48px;line-height:1.6;font-weight:300}
+  /* ========== CONTATO ========== */
+  .contact{display:grid;grid-template-columns:1fr 1fr;gap:96px}
+  .contact-info > .label{margin-bottom:32px}
+  .contact-info h3{font-weight:300;font-size:clamp(28px,3vw,42px);line-height:1.1;margin-bottom:48px;letter-spacing:-.01em}
+  .contact-info h3 em{font-style:normal;font-weight:500;color:var(--navy)}
+  .contact-row{
+    padding:22px 0;border-bottom:1px solid var(--line);
+    display:grid;grid-template-columns:130px 1fr;gap:20px;align-items:start;
+  }
+  .contact-row:first-of-type{border-top:1px solid var(--line)}
+  .contact-row .lbl{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);font-weight:500;padding-top:6px}
+  .contact-row .val{font-size:17px;color:var(--ink);font-weight:400}
+  .contact-row .val a{transition:color .2s}
+  .contact-row .val a:hover{color:var(--navy)}
+  .contact-row .val small{display:block;color:var(--ink);opacity:.5;font-size:14px;margin-top:4px;font-weight:300}
+  form{display:flex;flex-direction:column;gap:8px;background:var(--white);padding:48px;border-radius:16px;border:1px solid var(--line)}
+  form .field{margin-bottom:22px}
+  form label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);margin-bottom:10px;display:block;font-weight:500}
+  form input, form textarea, form select{
+    width:100%;padding:14px 0;background:transparent;border:0;border-bottom:1.5px solid var(--line);
+    font-family:var(--font);font-size:16px;color:var(--ink);outline:none;transition:border-color .25s;
+    font-weight:400;
+  }
+  form input:focus, form textarea:focus, form select:focus{border-bottom-color:var(--navy)}
+  form textarea{resize:vertical;min-height:80px}
+  form .row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .form-submit{align-self:flex-start;margin-top:16px;width:auto}
+  /* ========== FOOTER ========== */
+  footer{
+    background:var(--navy-deep);color:var(--bone);
+    padding:80px var(--gutter) 32px;
+  }
+  .footer-inner{max-width:var(--max);margin:0 auto}
+  .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid var(--line-on-navy)}
+  .footer-brand p{font-size:14px;line-height:1.65;opacity:.7;margin-top:24px;max-width:30ch}
+  .footer-col h5{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;margin-bottom:20px;opacity:.6}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .footer-col li a{font-size:15px;opacity:.85;transition:opacity .2s}
+  .footer-col li a:hover{opacity:1}
+  .footer-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:32px;font-size:12px;letter-spacing:.1em;opacity:.55;flex-wrap:wrap;gap:20px;
+  }
+  .socials{display:flex;gap:14px}
+  .socials a{
+    width:36px;height:36px;border-radius:50%;border:1px solid var(--line-on-navy);
+    display:grid;place-items:center;transition:all .25s;
+  }
+  .socials a:hover{background:var(--bone);color:var(--navy);border-color:var(--bone)}
+  /* ========== REVEAL ========== */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease, transform .9s ease}
+  .reveal.in{opacity:1;transform:translateY(0)}
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 980px){
+    .nav-links{display:none}
+    .menu-toggle{display:block}
+    .nav-cta{display:none}
+    .hero-services{gap:24px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat{border-right:0;border-bottom:1px solid var(--line)}
+    .stat:nth-child(odd){border-right:1px solid var(--line)}
+    .about, .process-grid, .contact, .services-head{grid-template-columns:1fr;gap:48px}
+    .services-head > p.lead{padding-top:0}
+    .about-pillars{grid-template-columns:1fr}
+    .services-grid{grid-template-columns:1fr}
+    .info-grid{grid-template-columns:repeat(2,1fr)}
+    .tracks-grid{grid-template-columns:1fr;gap:18px}
+    .portfolio-grid{grid-template-columns:1fr 1fr}
+    .project{flex:0 0 min(396px, 74vw)}
+    .project:hover{transform:translateY(-6px) scale(1.06)}
+    .project-meta{gap:16px}
+    .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+    section{padding:90px var(--gutter)}
+    .hero{padding:130px var(--gutter) 70px}
+  }
+  @media (max-width: 560px){
+    .portfolio-grid{grid-template-columns:1fr}
+    form{padding:28px}
+    form .row{grid-template-columns:1fr}
+    .footer-top{grid-template-columns:1fr}
+    .contact-row{grid-template-columns:1fr;gap:6px}
+    .stats{grid-template-columns:1fr}
+    .stat{border-right:0!important}
+  }
+</style>
+</head>
+<body>
+<!-- ===== SVG ICONS ===== -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="ic-strategy" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+    <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+    <line x1="12" y1="2" x2="12" y2="5" stroke="currentColor" stroke-width="1.6"></line>
+    <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="1.6"></line>
+  </symbol>
+  <symbol id="ic-precision" viewBox="0 0 24 24">
+    <path d="M12 2 L20 7 L20 17 L12 22 L4 17 L4 7 Z" fill="none" stroke="currentColor" stroke-width="1.6"></path>
+    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+  </symbol>
+  <symbol id="ic-connect" viewBox="0 0 24 24">
+    <circle cx="6" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+    <circle cx="18" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+    <circle cx="6" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+    <circle cx="18" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+    <line x1="8" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="1.6"></line>
+    <line x1="6" y1="8" x2="18" y2="16" stroke="currentColor" stroke-width="1.6"></line>
+    <line x1="6" y1="16" x2="18" y2="8" stroke="currentColor" stroke-width="1.6"></line>
+    <line x1="8" y1="18" x2="16" y2="18" stroke="currentColor" stroke-width="1.6"></line>
+  </symbol>
+  <symbol id="ic-building" viewBox="0 0 24 24">
+    <path d="M3 21V8L12 3L21 8V21" fill="none" stroke="currentColor" stroke-width="1.6"></path>
+    <line x1="3" y1="21" x2="21" y2="21" stroke="currentColor" stroke-width="1.6"></line>
+    <rect x="9" y="13" width="6" height="8" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
+    <line x1="7" y1="11" x2="7" y2="13" stroke="currentColor" stroke-width="1.6"></line>
+    <line x1="17" y1="11" x2="17" y2="13" stroke="currentColor" stroke-width="1.6"></line>
+  </symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24">
+    <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></line>
+    <polyline points="13,6 19,12 13,18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></polyline>
+  </symbol>
+  <symbol id="ic-template" viewBox="0 0 24 24">
+    <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
+    <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1.6"></line>
+    <line x1="9" y1="9" x2="9" y2="21" stroke="currentColor" stroke-width="1.6"></line>
+  </symbol>
+  <symbol id="ic-doc" viewBox="0 0 24 24">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="none" stroke="currentColor" stroke-width="1.6"></path>
+    <polyline points="14,2 14,8 20,8" fill="none" stroke="currentColor" stroke-width="1.6"></polyline>
+    <line x1="8" y1="13" x2="16" y2="13" stroke="currentColor" stroke-width="1.6"></line>
+    <line x1="8" y1="17" x2="14" y2="17" stroke="currentColor" stroke-width="1.6"></line>
+  </symbol>
+  <symbol id="ic-checklist" viewBox="0 0 24 24">
+    <rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
+    <polyline points="8,12 11,15 16,9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></polyline>
+  </symbol>
+  <symbol id="ic-pack" viewBox="0 0 24 24">
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="none" stroke="currentColor" stroke-width="1.6"></path>
+    <polyline points="3.27 6.96 12 12.01 20.73 6.96" fill="none" stroke="currentColor" stroke-width="1.6"></polyline>
+    <line x1="12" y1="22.08" x2="12" y2="12" stroke="currentColor" stroke-width="1.6"></line>
+  </symbol>
+  <symbol id="ic-code" viewBox="0 0 24 24">
+    <polyline points="16,18 22,12 16,6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+    <polyline points="8,6 2,12 8,18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+  </symbol>
+</svg>
+
+<nav class="nav scrolled" id="nav">
+  <a href="#top" class="logo">
+    <img class="logo-mark" src="nodus-symbol.svg" alt="Nodus">
+    <span class="logo-text" style="color:var(--navy)">
+      <span class="logo-word">nodus</span>
+      <span class="logo-tag">BIM SOLUTIONS</span>
+    </span>
+  </a>
+  <div class="nav-links">
+    <a href="#sobre">Quem Somos</a>
+    <a href="#infoprodutos">Infoprodutos</a>
+    <a href="#solucoes">Serviços</a>
+    <a href="#projetos">Portfólio</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <a href="#contato" class="nav-cta">Fale com a Nodus <svg class="arr" width="16" height="16"><use href="#ic-arrow"></use></svg></a>
+  <button class="menu-toggle" aria-label="Menu" id="menuToggle"><span></span><span></span><span></span></button>
+</nav>
+<a id="top"></a>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-bg"></div>
+  <img class="hero-symbol" src="nodus-symbol.svg" alt="" aria-hidden="true">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      Consultoria · Implementação · Treinamentos BIM
+    </div>
+    <h1>
+      <span class="word">Conectando</span>
+      <span class="word"><em>tecnologia,</em></span>
+      <span class="word">dados e</span>
+      <span class="word">engenharia</span>
+      <span class="word">para</span>
+      <span class="word"><strong>transformar projetos.</strong></span>
+    </h1>
+    <p class="hero-lead">
+      A Nodus é o ponto de conexão dentro do ecossistema BIM. Integramos
+      processos, equipes e informações para que cada projeto chegue ao
+      canteiro com precisão, eficiência e valor real para a obra.
+    </p>
+    <div class="hero-actions">
+      <a href="#contato" class="btn btn-primary">Iniciar projeto <svg class="arr" width="16" height="16"><use href="#ic-arrow"></use></svg></a>
+      <a href="#solucoes" class="btn btn-ghost-light">Conhecer serviços</a>
+    </div>
+    <div class="hero-services">
+      <div class="hero-service"><span class="num">01.</span> Te ensinamos a fazer</div>
+      <div class="hero-service"><span class="num">02.</span> Fazemos por você</div>
+      <div class="hero-service"><span class="num">03.</span> Fazemos com você</div>
+      <div class="hero-service"><span class="num">+</span> Infoprodutos</div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== STATS ===== -->
+<div class="stats reveal">
+  <div class="stat">
+    <div class="stat-num">+150 mil m²</div>
+    <div class="stat-lbl">Modelados em BIM</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">ISO 19650</div>
+    <div class="stat-lbl">Padrão internacional</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100%</div>
+    <div class="stat-lbl">Open BIM workflow</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">B2B</div>
+    <div class="stat-lbl">Engenharia &amp; Construção</div>
+  </div>
+</div>
+
+<!-- ===== SOBRE ===== -->
+<section id="sobre" class="reveal">
+  <div class="about">
+    <div class="about-visual">
+      <img class="about-wordmark" src="nodus-wordmark-bone.svg" alt="Nodus BIM Solutions">
+    </div>
+    <div>
+      <div class="label"><span class="num">01</span> Quem Somos</div>
+      <h2 class="h2">O ponto de <em>conexão</em> dentro do <strong>ecossistema BIM</strong>.</h2>
+      <div class="about-text">
+        <p class="lead">
+          A NODUS nasce com o propósito de atuar como um ponto de conexão dentro
+          do ecossistema BIM, integrando processos, equipes, tecnologias e
+          informações no contexto da construção civil.
+        </p>
+        <p class="lead">
+          Em um cenário onde muitas empresas ainda enfrentam dificuldades para
+          estruturar fluxos de trabalho eficientes, a Nodus surge como uma
+          consultoria especializada capaz de transformar teoria em prática —
+          aproximando estratégia, operação e capacitação técnica.
+        </p>
+      </div>
+      <div class="about-pillars">
+        <div class="pillar">
+          <div class="pillar-icon"><svg width="18" height="18"><use href="#ic-strategy"></use></svg></div>
+          <h4>Determinada</h4>
+          <p>Conduzimos processos com clareza, método e foco em resultados.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon"><svg width="18" height="18"><use href="#ic-connect"></use></svg></div>
+          <h4>Moderna</h4>
+          <p>Estética limpa, digital e conectada à transformação da construção.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon"><svg width="18" height="18"><use href="#ic-precision"></use></svg></div>
+          <h4>Profissional</h4>
+          <p>Conhecimento técnico, precisão e aplicação prática em cada entrega.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INFOPRODUTOS ===== -->
+<section id="infoprodutos" class="infoprods section-full reveal">
+  <div class="inner">
+    <div class="services-head">
+      <div>
+        <div class="label"><span class="num">02</span> Infoprodutos</div>
+        <h2 class="h2">Produtos prontos para <em>acelerar</em> sua operação <strong>BIM</strong>.</h2>
+      </div>
+      <p class="lead">
+        Recursos desenvolvidos pela Nodus para escritórios e construtoras que
+        querem ganhar maturidade BIM com método, padrão e velocidade — sem
+        reinventar o fluxo do zero.
+      </p>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-icon"><svg width="22" height="22"><use href="#ic-template"></use></svg></div>
+        <div class="info-num">— 01</div>
+        <h4>Template de Revit</h4>
+        <p>Arquivo-base estruturado com famílias, parâmetros, vistas e padrões prontos para iniciar projetos com consistência.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><svg width="22" height="22"><use href="#ic-checklist"></use></svg></div>
+        <div class="info-num">— 02</div>
+        <h4>Modelo de BIM Mandate</h4>
+        <p>Documento que define exigências, entregáveis e responsabilidades BIM contratuais entre cliente e equipe.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><svg width="22" height="22"><use href="#ic-doc"></use></svg></div>
+        <div class="info-num">— 03</div>
+        <h4>Modelo de Plano de Execução BIM</h4>
+        <p>BEP estruturado, com escopo, fluxos, LOD e governança alinhados às melhores práticas internacionais.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><svg width="22" height="22"><use href="#ic-pack"></use></svg></div>
+        <div class="info-num">— 04</div>
+        <h4>Pacote de Famílias de Revit</h4>
+        <p>Biblioteca paramétrica e classificada de famílias prontas para uso, acelerando modelagem e padronização.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><svg width="22" height="22"><use href="#ic-code"></use></svg></div>
+        <div class="info-num">— 05</div>
+        <h4>Pacote de Rotinas Dynamo</h4>
+        <p>Scripts de automação para tarefas repetitivas, validações e extração de dados — produtividade direta no Revit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVIÇOS / TRILHAS ===== -->
+<section id="solucoes" class="tracks section-full reveal">
+  <div class="inner">
+    <div class="services-head">
+      <div>
+        <div class="label label-light"><span class="num">03</span> Serviços</div>
+        <h2 class="h2 h2-light" style="color:var(--bone)">Três formas de trabalhar <em>juntos</em>.</h2>
+      </div>
+      <p class="lead lead-light">
+        Da capacitação da sua equipe à execução completa do modelo. A Nodus se
+        adapta ao nível de autonomia que você quer construir — e atua como o
+        ponto de conexão em qualquer um dos três modelos.
+      </p>
+    </div>
+    <div class="tracks-grid">
+      <div class="track">
+        <div class="track-tag"><span class="dot"></span> Trilha 01</div>
+        <h3>Te <strong>ensinamos</strong> a fazer.</h3>
+        <p class="track-lead">Construímos a maturidade BIM da sua equipe — você ganha autonomia metodológica e técnica.</p>
+        <ul>
+          <li>Consultoria especializada</li>
+          <li>Treinamentos</li>
+          <li>
+            <strong>Implantação BIM</strong>
+            <small>Análise e Diagnóstico BIM, BEP, BIM Mandate, Template de Revit personalizado, Projeto piloto, treinamento assistido e Famílias personalizadas.</small>
+          </li>
+          <li>Estabelecimento de padrões e processos</li>
+          <li>Fluxos de trabalho</li>
+        </ul>
+        <div class="track-foot">Ideal para escritórios em transição BIM</div>
+      </div>
+      <div class="track">
+        <div class="track-tag"><span class="dot"></span> Trilha 02</div>
+        <h3>Fazemos <strong>por você</strong>.</h3>
+        <p class="track-lead">Assumimos a execução completa do escopo BIM do seu projeto. Você foca no que faz melhor.</p>
+        <ul>
+          <li>Gerenciamento e coordenação BIM</li>
+          <li>Modelagem BIM</li>
+          <li>Compatibilização e análise crítica</li>
+          <li>Antecipação de soluções</li>
+          <li>BIM e Realidade Aumentada</li>
+        </ul>
+        <div class="track-foot">Ideal para empreendimentos com prazo apertado</div>
+      </div>
+      <div class="track">
+        <div class="track-tag"><span class="dot"></span> Trilha 03</div>
+        <h3>Fazemos <strong>com você</strong>.</h3>
+        <p class="track-lead">Operação assistida lado a lado com sua equipe — método, suporte técnico e ganho de produtividade contínuo.</p>
+        <ul>
+          <li>
+            <strong>Suporte BIM</strong>
+            <small>Time da Nodus disponível para tirar dúvidas, validar entregas e desbloquear gargalos no dia a dia do projeto.</small>
+          </li>
+          <li>
+            <strong>Operação Assistida</strong>
+            <small>Acompanhamento do fluxo de trabalho, revisões periódicas, controle de qualidade e mentoria aplicada à obra.</small>
+          </li>
+        </ul>
+        <div class="track-foot">Ideal para equipes que querem evoluir com governança</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PORTFÓLIO ===== -->
+<section id="projetos" class="portfolio-section reveal">
+  <div class="services-head">
+    <div>
+      <div class="label"><span class="num">04</span> Portfólio</div>
+      <h2 class="h2">Projetos que <em>conectam</em> visão e <strong>execução</strong>.</h2>
+    </div>
+    <p class="lead">
+      Cases que demonstram o valor da metodologia BIM aplicada com rigor —
+      da modelagem arquitetônica à compatibilização multidisciplinar. Use
+      as setas para navegar pelos projetos.
+    </p>
+  </div>
+  <div class="portfolio-controls">
+    <div class="portfolio-counter"><span class="current" id="pfCurrent">01</span> <span class="total">/ 06</span></div>
+    <div class="portfolio-arrows">
+      <button class="portfolio-arrow prev" id="pfPrev" aria-label="Projeto anterior">
+        <svg width="20" height="20"><use href="#ic-arrow"></use></svg>
+      </button>
+      <button class="portfolio-arrow next" id="pfNext" aria-label="Próximo projeto">
+        <svg width="20" height="20"><use href="#ic-arrow"></use></svg>
+      </button>
+    </div>
+  </div>
+  <div class="portfolio-track" id="pfTrack" tabindex="0">
+    <article class="project" data-img="project-bacia-tanques-quimicos.jpg" data-title="Bacia de Tanques Químicos" data-cat="Industrial · Modelagem BIM">
+      <div class="project-thumb">
+        <span class="project-thumb-tag">Industrial</span>
+        <img class="real" src="project-bacia-tanques-quimicos.jpg" alt="Modelagem BIM de bacia de tanques químicos com pipe rack e plataformas metálicas" onerror="this.style.display='none'">
+        <img class="placeholder" src="nodus-symbol.svg" alt="">
+        <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <span class="project-thumb-num">01 / 06</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Industrial · Modelagem BIM</div>
+        <h4>Bacia de Tanques Químicos</h4>
+        <p>Modelagem completa da planta de operações com pipe rack, subestação e plataformas metálicas de acesso.</p>
+        <div class="project-meta">
+          <div><span class="lbl">Tipologia</span><span class="val">Industrial</span></div>
+          <div><span class="lbl">Disciplinas</span><span class="val">ARQ · EST · INST</span></div>
+          <div><span class="lbl">LOD</span><span class="val">300–350</span></div>
+        </div>
+      </div>
+    </article>
+    <article class="project" data-img="project-complexo-hospitalar.jpg" data-title="Complexo Hospitalar" data-cat="Saúde · Edificação">
+      <div class="project-thumb">
+        <span class="project-thumb-tag">Hospital</span>
+        <img class="real" src="project-complexo-hospitalar.jpg" alt="Modelagem BIM de complexo hospitalar com torre clínica e blocos cirúrgicos" onerror="this.style.display='none'">
+        <img class="placeholder" src="nodus-symbol.svg" alt="">
+        <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <span class="project-thumb-num">02 / 06</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Saúde · Edificação</div>
+        <h4>Complexo Hospitalar</h4>
+        <p>Complexo hospitalar com torre clínica, blocos cirúrgicos e fachadas ventiladas. Modelagem para aprovação em órgãos públicos.</p>
+        <div class="project-meta">
+          <div><span class="lbl">Tipologia</span><span class="val">Saúde</span></div>
+          <div><span class="lbl">Disciplinas</span><span class="val">ARQ · EST · MEP</span></div>
+          <div><span class="lbl">LOD</span><span class="val">200</span></div>
+        </div>
+      </div>
+    </article>
+    <article class="project" data-img="project-residencia-declividade.jpg" data-title="Residência em Terreno de Alta Declividade" data-cat="Residencial · Unifamiliar">
+      <div class="project-thumb">
+        <span class="project-thumb-tag">Residencial</span>
+        <img class="real" src="project-residencia-declividade.jpg" alt="Modelagem BIM de residência unifamiliar em terreno de alta declividade" onerror="this.style.display='none'">
+        <img class="placeholder" src="nodus-symbol.svg" alt="">
+        <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <span class="project-thumb-num">03 / 06</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Residencial · Unifamiliar</div>
+        <h4>Residência em Terreno de Alta Declividade</h4>
+        <p>Residência unifamiliar em terreno de montanha. Modelagem evolutiva de LOD 200 (implantação, volumetria, insolação) para LOD 300 (estrutura, contenções, fundações e quantitativos).</p>
+        <div class="project-meta">
+          <div><span class="lbl">Tipologia</span><span class="val">Unifamiliar · Montanha</span></div>
+          <div><span class="lbl">Disciplinas</span><span class="val">ARQ · EST</span></div>
+          <div><span class="lbl">LOD</span><span class="val">200 → 300</span></div>
+        </div>
+      </div>
+    </article>
+    <article class="project" data-img="project-residencias-geminadas.jpg" data-title="Residências Geminadas" data-cat="Residencial · Geminadas">
+      <div class="project-thumb">
+        <span class="project-thumb-tag">Residencial</span>
+        <img class="real" src="project-residencias-geminadas.jpg" alt="Modelagem BIM de residências geminadas com compatibilização de estruturas e instalações" onerror="this.style.display='none'">
+        <img class="placeholder" src="nodus-symbol.svg" alt="">
+        <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <span class="project-thumb-num">04 / 06</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Residencial · Geminadas</div>
+        <h4>Residências Geminadas</h4>
+        <p>Residências geminadas unifamiliares com compatibilização de estruturas e instalações. Clash Detection e modelagem para aprovação em órgãos públicos.</p>
+        <div class="project-meta">
+          <div><span class="lbl">Tipologia</span><span class="val">Geminadas</span></div>
+          <div><span class="lbl">Disciplinas</span><span class="val">ARQ · EST · INST</span></div>
+          <div><span class="lbl">LOD</span><span class="val">200</span></div>
+        </div>
+      </div>
+    </article>
+    <article class="project" data-img="project-fabrica-biodefensores.jpg" data-title="Unidade Fabril de Biodefensores" data-cat="Industrial · Scan-to-BIM">
+      <div class="project-thumb">
+        <span class="project-thumb-tag">Industrial</span>
+        <img class="real" src="project-fabrica-biodefensores.jpg" alt="Modelagem BIM de unidade fabril de biodefensores agrícolas com Scan-to-BIM" onerror="this.style.display='none'">
+        <img class="placeholder" src="nodus-symbol.svg" alt="">
+        <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <span class="project-thumb-num">05 / 06</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Industrial · Scan-to-BIM</div>
+        <h4>Unidade Fabril de Biodefensores</h4>
+        <p>Reforma e ampliação de unidade fabril de biodefensores agrícolas. Scan-to-BIM com nuvem de pontos para As-Built fiel e compatibilização entre estruturas e instalações.</p>
+        <div class="project-meta">
+          <div><span class="lbl">Escopo</span><span class="val">Reforma + Ampliação</span></div>
+          <div><span class="lbl">Tecnologia</span><span class="val">Scan-to-BIM</span></div>
+          <div><span class="lbl">LOD</span><span class="val">350</span></div>
+        </div>
+      </div>
+    </article>
+    <article class="project" data-img="project-plataforma-metalica.jpg" data-title="Plataforma Industrial Metálica" data-cat="Industrial · Reforma">
+      <div class="project-thumb">
+        <span class="project-thumb-tag">Industrial</span>
+        <img class="real" src="project-plataforma-metalica.jpg" alt="Modelagem BIM de plataforma industrial metálica em estrutura treliçada" onerror="this.style.display='none'">
+        <img class="placeholder" src="nodus-symbol.svg" alt="">
+        <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <span class="project-thumb-num">06 / 06</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Industrial · Reforma</div>
+        <h4>Plataforma Industrial Metálica</h4>
+        <p>Reforma e ampliação de plataforma industrial metálica. Compatibilização entre estrutura existente e novos elementos, com extração de quantitativos para fabricação e montagem.</p>
+        <div class="project-meta">
+          <div><span class="lbl">Escopo</span><span class="val">Reforma + Ampliação</span></div>
+          <div><span class="lbl">Disciplinas</span><span class="val">EST Metálica</span></div>
+          <div><span class="lbl">LOD</span><span class="val">350</span></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===== QUOTE ===== -->
+<section class="quote-strip section-full reveal">
+  <div class="inner">
+    <div class="quote-mark">&ldquo;</div>
+    <p class="quote-text">
+      A Nodus traduz <em>BIM em decisão</em>. Cada vértice do modelo gera valor
+      para o cliente, para o construtor e para o projeto. Não entregamos
+      modelagem — entregamos clareza.
+    </p>
+    <div class="quote-attr">— Filosofia Nodus</div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-banner section-full reveal">
+  <div class="cta-banner-inner">
+    <div class="label label-light" style="justify-content:center;color:var(--bone)">— Vamos construir junto</div>
+    <h2>Construa com <em>precisão</em> antes mesmo da obra começar.</h2>
+    <p>
+      Conte-nos sobre o seu projeto. Em até 48 horas retornamos com um
+      diagnóstico inicial e a melhor estratégia BIM para a sua etapa.
+    </p>
+    <a href="#contato" class="btn btn-primary">Solicitar diagnóstico <svg class="arr" width="16" height="16"><use href="#ic-arrow"></use></svg></a>
+  </div>
+</section>
+
+<!-- ===== CONTATO ===== -->
+<section id="contato" class="reveal">
+  <div class="contact">
+    <div class="contact-info">
+      <div class="label"><span class="num">05</span> Contato</div>
+      <h3>Diga olá.<br>Queremos conhecer o <em>seu projeto</em>.</h3>
+      <div class="contact-row">
+        <span class="lbl">E-mail</span>
+        <span class="val"><a href="mailto:contato@nodusbim.com.br">contato@nodusbim.com.br</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="lbl">WhatsApp</span>
+        <span class="val"><a href="https://wa.me/5547992041167" target="_blank" rel="noopener">+55 (47) 99204-1167</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="lbl">Localização</span>
+        <span class="val">Brasil <small>Atendimento em todo território nacional</small></span>
+      </div>
+      <div class="contact-row">
+        <span class="lbl">Horário</span>
+        <span class="val">Seg — Sex · 09h às 18h</span>
+      </div>
+      <div class="contact-row">
+        <span class="lbl">Atuação</span>
+        <span class="val">B2B <small>Construtoras, escritórios de arquitetura e engenharia</small></span>
+      </div>
+    </div>
+    <form onsubmit="return handleSubmit(event)">
+      <div class="field">
+        <label for="nome">Seu nome</label>
+        <input id="nome" name="nome" type="text" required placeholder="Como podemos te chamar?">
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" required placeholder="voce@empresa.com">
+        </div>
+        <div class="field">
+          <label for="empresa">Empresa</label>
+          <input id="empresa" name="empresa" type="text" placeholder="Nome da empresa">
+        </div>
+      </div>
+      <div class="field">
+        <label for="servico">Interesse</label>
+        <select id="servico" name="servico">
+          <optgroup label="Serviços">
+            <option>Te ensinamos a fazer (Consultoria / Treinamentos / Implantação)</option>
+            <option>Fazemos por você (Modelagem / Coordenação / Compatibilização)</option>
+            <option>Fazemos com você (Suporte e Operação Assistida)</option>
+          </optgroup>
+          <optgroup label="Infoprodutos">
+            <option>Template de Revit</option>
+            <option>Modelo de BIM Mandate</option>
+            <option>Modelo de Plano de Execução BIM</option>
+            <option>Pacote de Famílias de Revit</option>
+            <option>Pacote de Rotinas Dynamo</option>
+          </optgroup>
+          <option>Outro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="mensagem">Sobre o projeto</label>
+        <textarea id="mensagem" name="mensagem" rows="3" required placeholder="Conte um pouco sobre o desafio."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary-dark form-submit">Enviar mensagem <svg class="arr" width="16" height="16"><use href="#ic-arrow"></use></svg></button>
+    </form>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <img class="logo-mark" src="nodus-symbol.svg" alt="Nodus">
+          <span class="logo-text" style="color:var(--bone)">
+            <span class="logo-word">nodus</span>
+            <span class="logo-tag">BIM SOLUTIONS</span>
+          </span>
+        </div>
+        <p>Conectando tecnologia, dados e engenharia para transformar projetos em resultados.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Serviços</h5>
+        <ul>
+          <li><a href="#solucoes">Te ensinamos a fazer</a></li>
+          <li><a href="#solucoes">Fazemos por você</a></li>
+          <li><a href="#solucoes">Fazemos com você</a></li>
+          <li><a href="#infoprodutos">Infoprodutos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="#sobre">Quem somos</a></li>
+          <li><a href="#infoprodutos">Infoprodutos</a></li>
+          <li><a href="#projetos">Portfólio</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Conecte-se</h5>
+        <ul>
+          <li><a href="https://www.linkedin.com/company/nodus-bim-solutions/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/nodusbim?igsh=NDliMWd0MnVoaGt6" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="mailto:contato@nodusbim.com.br">E-mail</a></li>
+          <li><a href="https://wa.me/5547992041167" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span id="yr">2026</span> Nodus BIM Solutions · Todos os direitos reservados</div>
+      <div class="socials">
+        <a href="https://www.linkedin.com/company/nodus-bim-solutions/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.339 18.337V9.725H5.667v8.612h2.672zM7.003 8.575a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zm11.336 9.762v-4.717c0-2.413-.523-4.27-3.342-4.27-1.355 0-2.265.745-2.637 1.45h-.038V9.725H9.776v8.612h2.672v-4.262c0-1.124.213-2.213 1.605-2.213 1.371 0 1.39 1.282 1.39 2.285v4.19h2.896z"/></svg></a>
+        <a href="https://www.instagram.com/nodusbim?igsh=NDliMWd0MnVoaGt6" target="_blank" rel="noopener" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg></a>
+        <a href="https://wa.me/5547992041167" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.004c-1.95 0-3.873-.526-5.553-1.518l-.398-.236-4.126 1.082 1.103-4.025-.26-.413a9.872 9.872 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.892-9.884 2.64.001 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizar projeto">
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="lbClose" aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+    </button>
+    <div class="lightbox-img-wrap">
+      <img class="lightbox-img" id="lbImg" alt="">
+    </div>
+    <div class="lightbox-caption">
+      <div>
+        <div class="lc-cat" id="lbCat"></div>
+        <div class="lc-title" id="lbTitle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  const toggle = document.getElementById('menuToggle');
+  toggle && toggle.addEventListener('click', () => {
+    const links = document.querySelector('.nav-links');
+    if (!links) return;
+    if (links.style.display === 'flex'){ links.style.display = ''; }
+    else {
+      Object.assign(links.style,{display:'flex',position:'fixed',top:'70px',left:'0',right:'0',flexDirection:'column',gap:'0',background:'var(--bone)',padding:'24px var(--gutter)',borderBottom:'1px solid var(--line)'});
+      links.querySelectorAll('a').forEach(a => Object.assign(a.style,{padding:'14px 0',borderBottom:'1px solid var(--line)'}));
+    }
+  });
+  // Hide placeholder when real image successfully loads
+  document.querySelectorAll('.project-thumb img.real').forEach(img => {
+    const mark = () => img.parentElement.classList.add('has-image');
+    if(img.complete && img.naturalWidth > 0) mark();
+    img.addEventListener('load', mark);
+    img.addEventListener('error', () => { img.style.display='none'; });
+  });
+
+  // Portfolio lightbox
+  (function(){
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbTitle = document.getElementById('lbTitle');
+    const lbCat = document.getElementById('lbCat');
+    const lbClose = document.getElementById('lbClose');
+    if(!lb) return;
+    function open(src, title, cat){
+      lbImg.src = src;
+      lbImg.alt = title || '';
+      lbTitle.textContent = title || '';
+      lbCat.textContent = cat || '';
+      lb.classList.add('open');
+      document.body.classList.add('lb-open');
+    }
+    function close(){
+      lb.classList.remove('open');
+      document.body.classList.remove('lb-open');
+      setTimeout(()=>{ lbImg.src=''; }, 350);
+    }
+    document.querySelectorAll('.project').forEach(card => {
+      const expandBtn = card.querySelector('.project-expand');
+      const open_ = (e) => {
+        e && e.stopPropagation();
+        const src = card.dataset.img || card.querySelector('.project-thumb img.real, .project-thumb img.placeholder')?.src;
+        open(src, card.dataset.title, card.dataset.cat);
+      };
+      if(expandBtn) expandBtn.addEventListener('click', open_);
+      card.addEventListener('click', (e) => {
+        if(e.target.closest('a')) return;
+        open_();
+      });
+    });
+    lbClose.addEventListener('click', close);
+    lb.addEventListener('click', (e) => { if(e.target === lb) close(); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && lb.classList.contains('open')) close(); });
+  })();
+
+  // Portfolio carousel
+  (function(){
+    const track = document.getElementById('pfTrack');
+    const prev = document.getElementById('pfPrev');
+    const next = document.getElementById('pfNext');
+    const counter = document.getElementById('pfCurrent');
+    if(!track) return;
+    const cards = track.querySelectorAll('.project');
+    const total = cards.length;
+    function step(){
+      const card = track.querySelector('.project');
+      if(!card) return 560;
+      const cs = getComputedStyle(track);
+      const gap = parseInt(cs.gap || cs.columnGap) || 24;
+      return card.getBoundingClientRect().width + gap;
+    }
+    function update(){
+      const sw = track.scrollWidth - track.clientWidth;
+      const idx = Math.min(total, Math.round(track.scrollLeft / step()) + 1);
+      counter.textContent = String(idx).padStart(2,'0');
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft >= sw - 4;
+    }
+    prev.addEventListener('click', () => track.scrollBy({left:-step(),behavior:'smooth'}));
+    next.addEventListener('click', () => track.scrollBy({left: step(),behavior:'smooth'}));
+    track.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    track.tabIndex = 0;
+    track.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowRight'){ e.preventDefault(); next.click(); }
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); prev.click(); }
+    });
+    update();
+  })();
+  function handleSubmit(e){
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type=submit]');
+    btn.innerHTML = 'Mensagem enviada ✓';
+    btn.style.background = 'var(--bone)';
+    btn.style.color = 'var(--navy)';
+    setTimeout(() => { e.target.reset(); btn.innerHTML = 'Enviar mensagem <svg class="arr" width="16" height="16"><use href="#ic-arrow"/></svg>'; btn.style.background=''; btn.style.color=''; }, 3000);
+    return false;
+  }
+</script>
+</body></html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
