@@ -113,14 +113,9 @@
   }
   .hero-symbol{
     position:absolute;top:50%;right:60px;transform:translateY(-50%);
-    width:min(520px,40vw);opacity:.55;z-index:1;
-    animation:float 12s ease-in-out infinite;
-    filter:drop-shadow(0 12px 40px rgba(0,0,0,.25));
+    width:min(520px,40vw);opacity:.92;z-index:1;
+    filter:drop-shadow(0 18px 50px rgba(0,0,0,.35));
     pointer-events:none;
-  }
-  @keyframes float{
-    0%,100%{transform:translateY(-50%) rotate(0)}
-    50%{transform:translateY(-52%) rotate(2deg)}
   }
   .hero-inner{
     position:relative;z-index:2;max-width:var(--max);margin:0 auto;width:100%;
@@ -224,29 +219,31 @@
   }
   .stat:last-child{border-right:0}
   .stat:hover{background:var(--bone-soft)}
-  .stat-num{font-weight:400;font-size:clamp(40px,4.5vw,64px);color:var(--navy);line-height:1;letter-spacing:-.02em}
-  .stat-lbl{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--ink);opacity:.7;margin-top:14px}
+  .stat-num{font-weight:400;font-size:clamp(28px,3vw,46px);color:var(--navy);line-height:1.05;letter-spacing:-.02em;white-space:nowrap}
+  .stat-lbl{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--ink);opacity:.7;margin-top:14px;white-space:nowrap}
   /* ========== SOBRE ========== */
   .about{display:grid;grid-template-columns:0.85fr 1.15fr;gap:96px;align-items:start}
   .about-visual{
     position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;
-    background:linear-gradient(140deg, var(--navy-deep) 0%, var(--navy) 50%, #2c4a96 100%);
-    box-shadow:0 30px 80px rgba(32,60,127,.22);
+    background:var(--bone-soft);
+    border:1px solid var(--line);
+    box-shadow:0 30px 80px rgba(32,60,127,.10);
     isolation:isolate;
   }
   .about-visual::before{
     content:'';position:absolute;inset:0;z-index:1;
     background-image:
-      linear-gradient(rgba(237,241,255,.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(237,241,255,.06) 1px, transparent 1px);
+      linear-gradient(rgba(32,60,127,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(32,60,127,.06) 1px, transparent 1px);
     background-size:48px 48px;
     mask-image:radial-gradient(ellipse 80% 80% at 50% 60%, black 30%, transparent 100%);
     -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 60%, black 30%, transparent 100%);
   }
-  .about-visual::after{
-    content:'';position:absolute;inset:-50%;z-index:1;
-    background:radial-gradient(circle at center, rgba(237,241,255,.18) 0%, transparent 50%);
-    animation:pulse 7s ease-in-out infinite;
+  .about-wordmark{
+    position:absolute;z-index:5;
+    top:50%;left:50%;transform:translate(-50%, -50%);
+    width:72%;
+    animation:fadeIn 1.2s .3s ease both;
   }
   @keyframes pulse{0%,100%{transform:scale(.9);opacity:.5}50%{transform:scale(1.05);opacity:.9}}
   .about-symbol-ghost{
@@ -260,14 +257,7 @@
     0%,100%{transform:translateY(0) rotate(0deg)}
     50%{transform:translateY(-20px) rotate(4deg)}
   }
-  .about-wordmark{
-    position:absolute;z-index:5;
-    top:50%;left:50%;transform:translate(-50%, -55%);
-    width:78%;
-    filter:drop-shadow(0 8px 30px rgba(0,0,0,.25));
-    animation:fadeIn 1.2s .3s ease both;
-  }
-  @keyframes fadeIn{from{opacity:0;transform:translate(-50%,-50%)}to{opacity:1;transform:translate(-50%,-55%)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   .about-mark{
     position:absolute;z-index:6;
     bottom:32px;right:32px;
@@ -326,6 +316,41 @@
   .pillar-icon{width:36px;height:36px;display:grid;place-items:center;border:1.5px solid var(--navy);border-radius:50%;color:var(--navy);margin-bottom:16px}
   .pillar h4{font-weight:500;font-size:17px;margin-bottom:6px;color:var(--navy)}
   .pillar p{font-size:14px;line-height:1.55;color:var(--ink);opacity:.7}
+  /* ========== FOUNDER / VITOR ========== */
+  .founder-section{background:var(--bone-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .founder-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:96px;align-items:center}
+  .founder-photo{
+    position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(32,60,127,.20);
+    transition:transform .5s ease, box-shadow .5s ease;
+  }
+  .founder-photo img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .8s ease;
+  }
+  .founder-photo:hover{transform:translateY(-6px);box-shadow:0 42px 100px rgba(32,60,127,.28)}
+  .founder-photo:hover img{transform:scale(1.04)}
+  .founder-photo-tag{
+    position:absolute;bottom:24px;left:24px;z-index:3;
+    color:var(--bone);
+    text-shadow:0 2px 14px rgba(0,0,0,.6);
+  }
+  .founder-photo-tag .name{font-size:22px;font-weight:500;letter-spacing:-.01em;line-height:1.1}
+  .founder-photo-tag .role{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:400;opacity:.9;margin-top:8px}
+  .founder-photo::after{
+    content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(180deg, transparent 50%, rgba(13,26,58,.55) 100%);
+  }
+  .founder-text h3{font-weight:300;font-size:clamp(28px,3vw,42px);line-height:1.1;letter-spacing:-.01em;margin-bottom:32px;color:var(--ink)}
+  .founder-text h3 strong{font-weight:600}
+  .founder-text h3 em{font-style:normal;font-weight:500;color:var(--navy)}
+  .founder-text > p{margin-bottom:22px}
+  .founder-stats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;
+    padding-top:32px;border-top:1px solid var(--line);
+  }
+  .founder-stat .num{font-size:clamp(22px,2.2vw,30px);font-weight:500;color:var(--navy);letter-spacing:-.01em;line-height:1}
+  .founder-stat .lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--ink);opacity:.65;margin-top:8px}
   /* ========== SERVIÇOS ========== */
   .services{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .services-head{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:80px}
@@ -392,12 +417,13 @@
   .tracks{background:var(--navy);color:var(--bone)}
   .tracks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px}
   .track{
-    background:rgba(237,241,255,.04);border:1px solid var(--line-on-navy);
+    background:rgba(237,241,255,.16);border:1px solid rgba(237,241,255,.30);
     border-radius:18px;padding:40px 36px;
     transition:all .35s ease;
     display:flex;flex-direction:column;gap:20px;
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
   }
-  .track:hover{background:rgba(237,241,255,.07);border-color:rgba(237,241,255,.32);transform:translateY(-4px)}
+  .track:hover{background:rgba(237,241,255,.24);border-color:rgba(237,241,255,.55);transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.22)}
   .track-tag{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;opacity:.65}
   .track-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--bone)}
   .track h3{font-weight:400;font-size:clamp(22px,2.2vw,28px);line-height:1.15;letter-spacing:-.01em}
@@ -669,12 +695,23 @@
     .stats{grid-template-columns:repeat(2,1fr)}
     .stat{border-right:0;border-bottom:1px solid var(--line)}
     .stat:nth-child(odd){border-right:1px solid var(--line)}
-    .about, .process-grid, .contact, .services-head{grid-template-columns:1fr;gap:48px}
+    .about, .process-grid, .contact, .services-head, .founder-grid{grid-template-columns:1fr;gap:48px}
+    .founder-stats{grid-template-columns:repeat(3,1fr);gap:16px}
     .services-head > p.lead{padding-top:0}
     .about-pillars{grid-template-columns:1fr}
     .services-grid{grid-template-columns:1fr}
     .info-grid{grid-template-columns:repeat(2,1fr)}
-    .tracks-grid{grid-template-columns:1fr;gap:18px}
+    .tracks-grid{
+      display:flex;grid-template-columns:none;
+      gap:16px;
+      overflow-x:auto;overflow-y:visible;
+      scroll-snap-type:x mandatory;scroll-behavior:smooth;
+      padding:8px var(--gutter) 24px var(--gutter);
+      margin:0 calc(-1 * var(--gutter));
+      scrollbar-width:none;-ms-overflow-style:none;
+    }
+    .tracks-grid::-webkit-scrollbar{display:none}
+    .track{flex:0 0 min(340px, 82vw);scroll-snap-align:start;padding:32px 28px}
     .portfolio-grid{grid-template-columns:1fr 1fr}
     .project{flex:0 0 min(396px, 74vw)}
     .project:hover{transform:translateY(-6px) scale(1.06)}
@@ -764,7 +801,7 @@
   </a>
   <div class="nav-links">
     <a href="#sobre">Quem Somos</a>
-    <a href="#infoprodutos">Infoprodutos</a>
+    <a href="#infoprodutos">Produtos</a>
     <a href="#solucoes">Serviços</a>
     <a href="#projetos">Portfólio</a>
     <a href="#contato">Contato</a>
@@ -778,7 +815,7 @@
 <header class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid-bg"></div>
-  <img class="hero-symbol" src="nodus-symbol.svg" alt="" aria-hidden="true">
+  <img class="hero-symbol" src="nodus-symbol-inverse.svg" alt="" aria-hidden="true">
   <div class="hero-inner">
     <div class="hero-eyebrow">
       <span class="dot"></span>
@@ -805,7 +842,7 @@
       <div class="hero-service"><span class="num">01.</span> Te ensinamos a fazer</div>
       <div class="hero-service"><span class="num">02.</span> Fazemos por você</div>
       <div class="hero-service"><span class="num">03.</span> Fazemos com você</div>
-      <div class="hero-service"><span class="num">+</span> Infoprodutos</div>
+      <div class="hero-service"><span class="num">+</span> Produtos</div>
     </div>
   </div>
 </header>
@@ -813,7 +850,7 @@
 <!-- ===== STATS ===== -->
 <div class="stats reveal">
   <div class="stat">
-    <div class="stat-num">+150 mil m²</div>
+    <div class="stat-num">+500 mil m²</div>
     <div class="stat-lbl">Modelados em BIM</div>
   </div>
   <div class="stat">
@@ -834,7 +871,7 @@
 <section id="sobre" class="reveal">
   <div class="about">
     <div class="about-visual">
-      <img class="about-wordmark" src="nodus-wordmark-bone.svg" alt="Nodus BIM Solutions">
+      <img class="about-wordmark" src="nodus-wordmark-black.svg" alt="Nodus BIM Solutions">
     </div>
     <div>
       <div class="label"><span class="num">01</span> Quem Somos</div>
@@ -873,12 +910,57 @@
   </div>
 </section>
 
+<!-- ===== FOUNDER / VITOR ===== -->
+<section id="vitor" class="founder-section section-full reveal">
+  <div class="inner">
+    <div class="founder-grid">
+      <div class="founder-photo">
+        <img src="team-vitor.jpg" alt="Vitor — fundador e BIM Manager da Nodus BIM Solutions">
+        <div class="founder-photo-tag">
+          <div class="name">Vitor</div>
+          <div class="role">Fundador · BIM Manager</div>
+        </div>
+      </div>
+      <div class="founder-text">
+        <div class="label"><span class="num">+</span> Liderança</div>
+        <h3>Quem está <em>à frente</em> da <strong>Nodus</strong>.</h3>
+        <p class="lead">
+          Engenheiro com forte atuação em <strong>BIM Management</strong>, Vitor
+          fundou a Nodus para colocar em prática um jeito mais conectado de
+          trabalhar projetos — onde estratégia, modelagem e canteiro deixam de
+          ser etapas isoladas e passam a operar como um único fluxo.
+        </p>
+        <p class="lead">
+          Com experiência em projetos de diferentes escalas — do residencial
+          unifamiliar a complexos industriais e hospitalares —, Vitor conduz
+          pessoalmente cada implantação BIM, unindo método, repertório técnico
+          e proximidade com o cliente.
+        </p>
+        <div class="founder-stats">
+          <div class="founder-stat">
+            <div class="num">+8 anos</div>
+            <div class="lbl">Experiência BIM</div>
+          </div>
+          <div class="founder-stat">
+            <div class="num">ISO 19650</div>
+            <div class="lbl">Especialização</div>
+          </div>
+          <div class="founder-stat">
+            <div class="num">Multi-disciplina</div>
+            <div class="lbl">ARQ · EST · MEP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== INFOPRODUTOS ===== -->
 <section id="infoprodutos" class="infoprods section-full reveal">
   <div class="inner">
     <div class="services-head">
       <div>
-        <div class="label"><span class="num">02</span> Infoprodutos</div>
+        <div class="label"><span class="num">02</span> Produtos</div>
         <h2 class="h2">Produtos prontos para <em>acelerar</em> sua operação <strong>BIM</strong>.</h2>
       </div>
       <p class="lead">
@@ -962,6 +1044,7 @@
           <li>Modelagem BIM</li>
           <li>Compatibilização e análise crítica</li>
           <li>Antecipação de soluções</li>
+          <li>Quantitativos assertivos</li>
           <li>BIM e Realidade Aumentada</li>
         </ul>
         <div class="track-foot">Ideal para empreendimentos com prazo apertado</div>
@@ -1000,7 +1083,7 @@
     </p>
   </div>
   <div class="portfolio-controls">
-    <div class="portfolio-counter"><span class="current" id="pfCurrent">01</span> <span class="total">/ 06</span></div>
+    <div class="portfolio-counter"><span class="current" id="pfCurrent">01</span> <span class="total">/ 07</span></div>
     <div class="portfolio-arrows">
       <button class="portfolio-arrow prev" id="pfPrev" aria-label="Projeto anterior">
         <svg width="20" height="20"><use href="#ic-arrow"></use></svg>
@@ -1017,7 +1100,7 @@
         <img class="real" src="project-bacia-tanques-quimicos.jpg" alt="Modelagem BIM de bacia de tanques químicos com pipe rack e plataformas metálicas" onerror="this.style.display='none'">
         <img class="placeholder" src="nodus-symbol.svg" alt="">
         <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <span class="project-thumb-num">01 / 06</span>
+        <span class="project-thumb-num">01 / 07</span>
       </div>
       <div class="project-info">
         <div class="project-cat">Industrial · Modelagem BIM</div>
@@ -1036,7 +1119,7 @@
         <img class="real" src="project-complexo-hospitalar.jpg" alt="Modelagem BIM de complexo hospitalar com torre clínica e blocos cirúrgicos" onerror="this.style.display='none'">
         <img class="placeholder" src="nodus-symbol.svg" alt="">
         <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <span class="project-thumb-num">02 / 06</span>
+        <span class="project-thumb-num">02 / 07</span>
       </div>
       <div class="project-info">
         <div class="project-cat">Saúde · Edificação</div>
@@ -1055,7 +1138,7 @@
         <img class="real" src="project-residencia-declividade.jpg" alt="Modelagem BIM de residência unifamiliar em terreno de alta declividade" onerror="this.style.display='none'">
         <img class="placeholder" src="nodus-symbol.svg" alt="">
         <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <span class="project-thumb-num">03 / 06</span>
+        <span class="project-thumb-num">03 / 07</span>
       </div>
       <div class="project-info">
         <div class="project-cat">Residencial · Unifamiliar</div>
@@ -1074,7 +1157,7 @@
         <img class="real" src="project-residencias-geminadas.jpg" alt="Modelagem BIM de residências geminadas com compatibilização de estruturas e instalações" onerror="this.style.display='none'">
         <img class="placeholder" src="nodus-symbol.svg" alt="">
         <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <span class="project-thumb-num">04 / 06</span>
+        <span class="project-thumb-num">04 / 07</span>
       </div>
       <div class="project-info">
         <div class="project-cat">Residencial · Geminadas</div>
@@ -1093,7 +1176,7 @@
         <img class="real" src="project-fabrica-biodefensores.jpg" alt="Modelagem BIM de unidade fabril de biodefensores agrícolas com Scan-to-BIM" onerror="this.style.display='none'">
         <img class="placeholder" src="nodus-symbol.svg" alt="">
         <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <span class="project-thumb-num">05 / 06</span>
+        <span class="project-thumb-num">05 / 07</span>
       </div>
       <div class="project-info">
         <div class="project-cat">Industrial · Scan-to-BIM</div>
@@ -1112,7 +1195,7 @@
         <img class="real" src="project-plataforma-metalica.jpg" alt="Modelagem BIM de plataforma industrial metálica em estrutura treliçada" onerror="this.style.display='none'">
         <img class="placeholder" src="nodus-symbol.svg" alt="">
         <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <span class="project-thumb-num">06 / 06</span>
+        <span class="project-thumb-num">06 / 07</span>
       </div>
       <div class="project-info">
         <div class="project-cat">Industrial · Reforma</div>
@@ -1125,6 +1208,26 @@
         </div>
       </div>
     </article>
+    <article class="project" data-img="project-torre-multifamiliar.jpg" data-title="Torre Residencial Multifamiliar" data-cat="Residencial · Multifamiliar">
+      <div class="project-thumb">
+        <span class="project-thumb-tag">Residencial</span>
+        <img class="real" src="project-torre-multifamiliar.jpg" alt="Modelagem BIM de torre residencial multifamiliar de 32 pavimentos com gerenciamento e compatibilização" onerror="this.style.display='none'">
+        <img class="placeholder" src="nodus-symbol.svg" alt="">
+        <button class="project-expand" aria-label="Ampliar imagem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <span class="project-thumb-num">07 / 07</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cat">Residencial · Multifamiliar</div>
+        <h4>Torre Residencial Multifamiliar</h4>
+        <p>Gerenciamento e compatibilização de projetos em BIM para empreendimento multifamiliar de 32 pavimentos. Integração e resolução de interferências entre disciplinas MEP e estrutural.</p>
+        <div class="project-meta">
+          <div><span class="lbl">Pavimentos</span><span class="val">32</span></div>
+          <div><span class="lbl">Disciplinas</span><span class="val">EST · MEP</span></div>
+          <div><span class="lbl">LOD</span><span class="val">350</span></div>
+        </div>
+      </div>
+    </article>
+
   </div>
 </section>
 
@@ -1204,7 +1307,7 @@
             <option>Fazemos por você (Modelagem / Coordenação / Compatibilização)</option>
             <option>Fazemos com você (Suporte e Operação Assistida)</option>
           </optgroup>
-          <optgroup label="Infoprodutos">
+          <optgroup label="Produtos">
             <option>Template de Revit</option>
             <option>Modelo de BIM Mandate</option>
             <option>Modelo de Plano de Execução BIM</option>
@@ -1243,14 +1346,14 @@
           <li><a href="#solucoes">Te ensinamos a fazer</a></li>
           <li><a href="#solucoes">Fazemos por você</a></li>
           <li><a href="#solucoes">Fazemos com você</a></li>
-          <li><a href="#infoprodutos">Infoprodutos</a></li>
+          <li><a href="#infoprodutos">Produtos</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h5>Empresa</h5>
         <ul>
           <li><a href="#sobre">Quem somos</a></li>
-          <li><a href="#infoprodutos">Infoprodutos</a></li>
+          <li><a href="#infoprodutos">Produtos</a></li>
           <li><a href="#projetos">Portfólio</a></li>
           <li><a href="#contato">Contato</a></li>
         </ul>
@@ -1406,4 +1509,4 @@
   }
 </script>
 </body></html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                                                                           
