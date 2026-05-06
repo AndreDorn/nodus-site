@@ -345,6 +345,19 @@
   .founder-text h3 strong{font-weight:600}
   .founder-text h3 em{font-style:normal;font-weight:500;color:var(--navy)}
   .founder-text > p{margin-bottom:22px}
+  .founder-list{
+    list-style:none;display:flex;flex-direction:column;gap:10px;
+    margin:8px 0 12px;padding:0;
+  }
+  .founder-list li{
+    position:relative;padding-left:22px;
+    font-size:clamp(15px,1.2vw,17px);color:var(--ink);opacity:.78;line-height:1.55;font-weight:300;
+  }
+  .founder-list li::before{
+    content:'';position:absolute;left:0;top:.7em;
+    width:7px;height:7px;border-radius:50%;
+    background:var(--navy);
+  }
   .founder-stats{
     display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;
     padding-top:32px;border-top:1px solid var(--line);
@@ -885,7 +898,7 @@
         <p class="lead">
           Em um cenário onde muitas empresas ainda enfrentam dificuldades para
           estruturar fluxos de trabalho eficientes, a Nodus surge como uma
-          consultoria especializada capaz de transformar teoria em prática —
+          consultoria especializada capaz de transformar teoria em prática,
           aproximando estratégia, operação e capacitação técnica.
         </p>
       </div>
@@ -915,27 +928,32 @@
   <div class="inner">
     <div class="founder-grid">
       <div class="founder-photo">
-        <img src="team-vitor.jpg" alt="Vitor — fundador e BIM Manager da Nodus BIM Solutions">
+        <img src="team-vitor.jpg" alt="Vitor Bortoncello, arquiteto fundador e BIM Manager da Nodus BIM Solutions">
         <div class="founder-photo-tag">
-          <div class="name">Vitor</div>
-          <div class="role">Fundador · BIM Manager</div>
+          <div class="name">Vitor Bortoncello</div>
+          <div class="role">Arquiteto · BIM Manager</div>
         </div>
       </div>
       <div class="founder-text">
         <div class="label"><span class="num">+</span> Liderança</div>
         <h3>Quem está <em>à frente</em> da <strong>Nodus</strong>.</h3>
         <p class="lead">
-          Engenheiro com forte atuação em <strong>BIM Management</strong>, Vitor
-          fundou a Nodus para colocar em prática um jeito mais conectado de
-          trabalhar projetos — onde estratégia, modelagem e canteiro deixam de
-          ser etapas isoladas e passam a operar como um único fluxo.
+          Arquiteto com forte atuação em <strong>BIM Management</strong>,
+          Vitor Bortoncello fundou a Nodus para colocar em prática um jeito
+          mais conectado de trabalhar projetos, onde estratégia, modelagem e
+          canteiro deixam de ser etapas isoladas e passam a operar como um
+          único fluxo.
         </p>
         <p class="lead">
-          Com experiência em projetos de diferentes escalas — do residencial
-          unifamiliar a complexos industriais e hospitalares —, Vitor conduz
-          pessoalmente cada implantação BIM, unindo método, repertório técnico
-          e proximidade com o cliente.
+          Vitor Bortoncello conduz pessoalmente cada implantação BIM, unindo
+          método, repertório técnico e proximidade com o cliente. Atua em
+          projetos de diferentes escalas:
         </p>
+        <ul class="founder-list">
+          <li>Residencial unifamiliar e multifamiliar</li>
+          <li>Complexos industriais e Scan-to-BIM</li>
+          <li>Edificações hospitalares e corporativas</li>
+        </ul>
         <div class="founder-stats">
           <div class="founder-stat">
             <div class="num">+8 anos</div>
